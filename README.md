@@ -57,7 +57,7 @@ NetDAC provides **enterprise-grade network device forensics** with complete mult
 **Prerequisites:** Go 1.19+, SSH access to target devices, privileged access for forensic commands
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/mike-trewartha/NetDAC
 cd NetDAC
 go mod tidy
 go build -o netdac ./cmd/netdac
@@ -216,37 +216,6 @@ NetDAC implements official Cisco forensic data collection procedures:
 - **Metadata Tracking**: Complete timestamps, execution duration, and error logging
 - **Raw Data Preservation**: Complete command output retained for analysis
 
-## Project Structure
-
-```
-netdac/
-├── cmd/netdac/                 # CLI application entry point
-│   ├── main.go                 # Root command and CLI setup
-│   └── collect.go              # Collection subcommand logic
-├── internal/
-│   ├── core/                   # Core data structures and interfaces
-│   │   ├── types.go            # Data structure definitions
-│   │   ├── collector.go        # Collector interface
-│   │   └── parser.go           # Parser interface and utilities
-│   ├── device/                 # Vendor-specific implementations
-│   │   ├── cisco/              # Cisco device support
-│   │   │   ├── asa.go          # ASA collector
-│   │   │   └── asa_parser.go   # ASA parser
-│   │   ├── fortinet/           # FortiNet device support
-│   │   │   ├── fortios.go      # FortiOS collector
-│   │   │   └── fortios_parser.go # FortiOS parser
-│   │   └── paloalto/           # Palo Alto device support
-│   │       ├── panos.go        # PAN-OS collector
-│   │       └── panos_parser.go # PAN-OS parser
-│   └── output/                 # Output formatting
-│       ├── json.go             # JSON formatter
-│       ├── yaml.go             # YAML formatter
-│       └── csv.go              # CSV formatter
-├── test files                  # Comprehensive test coverage
-├── documentation              # Implementation reports and guides
-├── go.mod & go.sum            # Go module dependencies
-└── README.md                  # This documentation
-```
 
 ## Current Status
 
@@ -359,7 +328,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Support & Contact
 
-- **Issues & Bug Reports**: [Create an issue](https://github.com/username/netdac/issues) in the repository
+- **Issues & Bug Reports**: [Create an issue](https://github.com/mike-trewartha/NetDAC/issues) in the repository
 - **Feature Requests**: Submit via GitHub issues with the enhancement label
 - **Documentation**: Check existing documentation and implementation reports
 - **Community**: Discussions and community support via GitHub Discussions
@@ -374,4 +343,4 @@ NetDAC was inspired by:
 
 ---
 
-**NetDAC** - Professional network device forensics for incident responders and digital investigators.
+**NetDAC** - A network device forensic artifact collector for incident responders and digital investigators.

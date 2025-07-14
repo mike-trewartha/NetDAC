@@ -1,0 +1,211 @@
+{
+  "device_info": {
+    "hostname": "CORP-RTR-01",
+    "ip_address": "192.168.1.1",
+    "vendor": "cisco",
+    "model": "ISR4321",
+    "version": "16.09.04",
+    "serial_number": "FDO21345678",
+    "uptime": "5 days, 14 hours, 23 minutes"
+  },
+  "timestamp": "2025-07-13T15:45:30.123Z",
+  "interfaces": [
+    {
+      "name": "GigabitEthernet0/0/0",
+      "status": "up",
+      "admin_status": "up",
+      "ip_address": "203.0.113.1",
+      "subnet_mask": "255.255.255.252",
+      "mac_address": "00:1a:2b:3c:4d:5e",
+      "mtu": "1500",
+      "speed": "1000",
+      "duplex": "full",
+      "description": "WAN - Internet Provider Link"
+    },
+    {
+      "name": "GigabitEthernet0/0/1",
+      "status": "up",
+      "admin_status": "up",
+      "ip_address": "192.168.1.1",
+      "subnet_mask": "255.255.255.0",
+      "mac_address": "00:1a:2b:3c:4d:5f",
+      "mtu": "1500",
+      "speed": "1000",
+      "duplex": "full",
+      "description": "LAN - Corporate Network"
+    },
+    {
+      "name": "GigabitEthernet0/0/2",
+      "status": "down",
+      "admin_status": "up",
+      "ip_address": "",
+      "subnet_mask": "",
+      "mac_address": "00:1a:2b:3c:4d:60",
+      "mtu": "1500",
+      "speed": "auto",
+      "duplex": "auto",
+      "description": "Unused - Available for DMZ"
+    }
+  ],
+  "routes": [
+    {
+      "destination": "0.0.0.0/0",
+      "gateway": "203.0.113.2",
+      "interface": "GigabitEthernet0/0/0",
+      "metric": "1",
+      "protocol": "static",
+      "admin_distance": "1"
+    },
+    {
+      "destination": "192.168.1.0/24",
+      "gateway": "",
+      "interface": "GigabitEthernet0/0/1",
+      "metric": "0",
+      "protocol": "connected",
+      "admin_distance": "0"
+    },
+    {
+      "destination": "203.0.113.0/30",
+      "gateway": "",
+      "interface": "GigabitEthernet0/0/0",
+      "metric": "0",
+      "protocol": "connected",
+      "admin_distance": "0"
+    }
+  ],
+  "processes": [
+    {
+      "pid": "1",
+      "name": "Kernel",
+      "cpu": "0.00%",
+      "memory": "4096",
+      "runtime": "5d14h",
+      "state": "running",
+      "priority": "0",
+      "command_line": "Kernel"
+    },
+    {
+      "pid": "15",
+      "name": "BGP Router",
+      "cpu": "0.04%",
+      "memory": "8192",
+      "runtime": "5d14h",
+      "state": "running",
+      "priority": "0",
+      "command_line": "BGP Router"
+    },
+    {
+      "pid": "42",
+      "name": "SSH Process",
+      "cpu": "0.01%",
+      "memory": "2048",
+      "runtime": "2h15m",
+      "state": "running",
+      "priority": "0",
+      "command_line": "SSH Process"
+    }
+  ],
+  "sessions": [
+    {
+      "user": "admin",
+      "line": "vty 0",
+      "location": "192.168.1.100",
+      "idle_time": "00:02:15",
+      "login_time": "13:30:15",
+      "protocol": "ssh"
+    },
+    {
+      "user": "netops",
+      "line": "console 0",
+      "location": "console",
+      "idle_time": "1d3h",
+      "login_time": "Mon 10:15",
+      "protocol": "console"
+    }
+  ],
+  "connections": [
+    {
+      "protocol": "TCP",
+      "local_address": "192.168.1.1",
+      "local_port": "22",
+      "remote_address": "192.168.1.100",
+      "remote_port": "54321",
+      "state": "ESTABLISHED",
+      "pid": "42",
+      "process": "SSH Process"
+    },
+    {
+      "protocol": "TCP",
+      "local_address": "203.0.113.1",
+      "local_port": "179",
+      "remote_address": "203.0.113.10",
+      "remote_port": "179",
+      "state": "ESTABLISHED",
+      "pid": "15",
+      "process": "BGP Router"
+    }
+  ],
+  "security_info": {
+    "acl_rules": [
+      {
+        "name": "OUTSIDE_IN",
+        "type": "extended",
+        "sequence": 10,
+        "action": "permit",
+        "protocol": "tcp",
+        "source": "any",
+        "destination": "192.168.1.0 0.0.0.255",
+        "port": "eq 80",
+        "direction": "inbound",
+        "interface": "GigabitEthernet0/0/0"
+      },
+      {
+        "name": "OUTSIDE_IN",
+        "type": "extended", 
+        "sequence": 20,
+        "action": "permit",
+        "protocol": "tcp",
+        "source": "any",
+        "destination": "192.168.1.0 0.0.0.255",
+        "port": "eq 443",
+        "direction": "inbound",
+        "interface": "GigabitEthernet0/0/0"
+      },
+      {
+        "name": "OUTSIDE_IN",
+        "type": "extended",
+        "sequence": 999,
+        "action": "deny",
+        "protocol": "ip",
+        "source": "any",
+        "destination": "any",
+        "port": "",
+        "direction": "inbound",
+        "interface": "GigabitEthernet0/0/0"
+      }
+    ]
+  },
+  "metadata": {
+    "total_commands": 15,
+    "successful_commands": 15,
+    "failed_commands": 0,
+    "collection_duration": "45.2s",
+    "errors": []
+  },
+  "raw_commands": [
+    {
+      "command": "show version",
+      "output": "Cisco IOS XE Software, Version 16.09.04\nCisco ISR4321 (1RU) processor with 1795072K/6147K bytes of memory.\nProcessor board ID FDO21345678\n4 Gigabit Ethernet interfaces\n32768K bytes of non-volatile configuration memory.\n4194304K bytes of physical memory.\n3207167K bytes of flash memory at bootflash:.\n\nConfiguration register is 0x2102",
+      "timestamp": "2025-07-13T15:45:31.456Z",
+      "exit_code": 0,
+      "duration": "1.2s"
+    },
+    {
+      "command": "show ip interface brief",
+      "output": "Interface                  IP-Address      OK? Method Status                Protocol\nGigabitEthernet0/0/0       203.0.113.1     YES NVRAM  up                    up      \nGigabitEthernet0/0/1       192.168.1.1     YES NVRAM  up                    up      \nGigabitEthernet0/0/2       unassigned      YES NVRAM  administratively down down    \nGigabitEthernet0/0/3       unassigned      YES NVRAM  administratively down down",
+      "timestamp": "2025-07-13T15:45:32.789Z",
+      "exit_code": 0,
+      "duration": "0.8s"
+    }
+  ]
+}

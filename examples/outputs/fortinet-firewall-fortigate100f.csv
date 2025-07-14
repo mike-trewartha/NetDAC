@@ -1,0 +1,45 @@
+Device,Hostname,IP Address,Vendor,Model,Version,Serial Number,Uptime
+Device Info,FW-DMZ-01,172.16.1.1,fortinet,FortiGate-100F,v7.0.4,FG100F3G20012345,45 days 12 hours 30 minutes
+
+Interface,Name,Status,Admin Status,IP Address,Subnet Mask,MAC Address,MTU,Speed,Duplex,Description
+Interface,port1,up,up,203.0.113.5,255.255.255.252,00:09:0f:12:34:01,1500,1000,full,WAN - External Internet
+Interface,port2,up,up,172.16.1.1,255.255.255.0,00:09:0f:12:34:02,1500,1000,full,DMZ - Web Servers
+Interface,port3,up,up,192.168.10.1,255.255.255.0,00:09:0f:12:34:03,1500,1000,full,Internal LAN
+Interface,port4,down,up,,,00:09:0f:12:34:04,1500,auto,auto,Unused - Management
+
+Route,Destination,Gateway,Interface,Metric,Protocol,Admin Distance
+Route,0.0.0.0/0,203.0.113.6,port1,1,static,10
+Route,172.16.1.0/24,,port2,0,connected,0
+Route,192.168.10.0/24,,port3,0,connected,0
+Route,203.0.113.4/30,,port1,0,connected,0
+
+Process,PID,Name,CPU,Memory,Runtime,State,Priority,Command Line
+Process,1,init,0.00%,1024,45d12h,running,0,init
+Process,145,miglogd,0.05%,2048,45d12h,running,0,miglogd
+Process,267,httpsd,0.15%,8192,45d12h,running,0,httpsd
+Process,289,sshd,0.02%,4096,3h45m,running,0,sshd
+
+Session,User,Line,Location,Idle Time,Login Time,Protocol
+Session,admin,ssh,192.168.10.100,00:03:22,11:45:30,ssh
+Session,monitor,https,172.16.1.50,00:01:15,14:20:45,https
+
+Connection,Protocol,Local Address,Local Port,Remote Address,Remote Port,State,PID,Process
+Connection,TCP,172.16.1.1,22,192.168.10.100,54891,ESTABLISHED,289,sshd
+Connection,TCP,172.16.1.1,443,172.16.1.50,49231,ESTABLISHED,267,httpsd
+Connection,UDP,203.0.113.5,53,8.8.8.8,53,ESTABLISHED,156,named
+
+Security Rule,Name,Type,Sequence,Action,Protocol,Source,Destination,Port,Direction,Interface
+Security Rule,DMZ_INBOUND,firewall,1,allow,tcp,any,172.16.1.0/24,80,inbound,port1
+Security Rule,DMZ_INBOUND,firewall,2,allow,tcp,any,172.16.1.0/24,443,inbound,port1
+Security Rule,DMZ_INBOUND,firewall,3,deny,any,any,172.16.1.0/24,,inbound,port1
+Security Rule,LAN_OUTBOUND,firewall,10,allow,tcp,192.168.10.0/24,any,80,outbound,port3
+Security Rule,LAN_OUTBOUND,firewall,11,allow,tcp,192.168.10.0/24,any,443,outbound,port3
+Security Rule,LAN_OUTBOUND,firewall,12,allow,udp,192.168.10.0/24,any,53,outbound,port3
+Security Rule,LAN_OUTBOUND,firewall,99,deny,any,192.168.10.0/24,any,,outbound,port3
+
+Metadata,Field,Value
+Metadata,Total Commands,22
+Metadata,Successful Commands,22
+Metadata,Failed Commands,0
+Metadata,Collection Duration,67.5s
+Metadata,Errors,

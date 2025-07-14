@@ -1,0 +1,311 @@
+{
+  "device_info": {
+    "hostname": "mx480-core-router",
+    "ip_address": "192.168.100.10",
+    "vendor": "Juniper Networks", 
+    "model": "MX480 Base Chassis",
+    "version": "Junos: 20.2R3.8",
+    "serial_number": "ABC123456",
+    "uptime": "120 days, 14 hours, 25 minutes, 30 seconds"
+  },
+  "timestamp": "2025-01-13T10:30:00Z",
+  "connections": [
+    {
+      "protocol": "tcp",
+      "local_address": "192.168.100.10",
+      "local_port": "22",
+      "remote_address": "192.168.1.100",
+      "remote_port": "54321",
+      "state": "ESTABLISHED",
+      "process": "sshd"
+    },
+    {
+      "protocol": "tcp", 
+      "local_address": "192.168.100.10",
+      "local_port": "179",
+      "remote_address": "192.168.100.1",
+      "remote_port": "179",
+      "state": "ESTABLISHED",
+      "process": "rpd"
+    }
+  ],
+  "routes": [
+    {
+      "destination": "0.0.0.0/0",
+      "gateway": "192.168.100.1",
+      "interface": "ge-0/0/0",
+      "protocol": "Static",
+      "metric": "1"
+    },
+    {
+      "destination": "192.168.0.0/16",
+      "gateway": "0.0.0.0",
+      "interface": "ge-0/0/1", 
+      "protocol": "Direct",
+      "metric": "0"
+    }
+  ],
+  "processes": [
+    {
+      "pid": "1",
+      "name": "init",
+      "cpu": "0.0",
+      "memory": "1508K",
+      "state": "S",
+      "command_line": "/sbin/init"
+    },
+    {
+      "pid": "1234",
+      "name": "rpd",
+      "cpu": "2.3",
+      "memory": "45M",
+      "state": "S",
+      "command_line": "/usr/sbin/rpd -N"
+    },
+    {
+      "pid": "2345",
+      "name": "chassisd",
+      "cpu": "0.1",
+      "memory": "12M",
+      "state": "S", 
+      "command_line": "/usr/sbin/chassisd -N"
+    }
+  ],
+  "interfaces": [
+    {
+      "name": "ge-0/0/0",
+      "type": "Gigabit Ethernet",
+      "description": "WAN Interface",
+      "admin_status": "up",
+      "oper_status": "up",
+      "ip_address": "192.168.100.10/24",
+      "mac_address": "00:1f:12:34:56:78"
+    },
+    {
+      "name": "ge-0/0/1",
+      "type": "Gigabit Ethernet", 
+      "description": "LAN Interface",
+      "admin_status": "up",
+      "oper_status": "up",
+      "ip_address": "10.0.1.1/24",
+      "mac_address": "00:1f:12:34:56:79"
+    },
+    {
+      "name": "lo0",
+      "type": "Loopback",
+      "description": "Loopback Interface",
+      "admin_status": "up",
+      "oper_status": "up",
+      "ip_address": "127.0.0.1/32"
+    }
+  ],
+  "sessions": [
+    {
+      "session_id": "100001",
+      "source_ip": "192.168.1.100",
+      "destination_ip": "8.8.8.8",
+      "source_port": "54321",
+      "destination_port": "53",
+      "protocol": "UDP",
+      "state": "Active",
+      "policy": "trust-to-untrust"
+    },
+    {
+      "session_id": "100002", 
+      "source_ip": "10.0.1.50",
+      "destination_ip": "203.0.113.10",
+      "source_port": "12345",
+      "destination_port": "80",
+      "protocol": "TCP",
+      "state": "Active",
+      "policy": "lan-to-wan"
+    }
+  ],
+  "system_info": {
+    "cpu_utilization": "15%",
+    "memory_utilization": "45%",
+    "temperature": "Normal",
+    "power_status": "OK",
+    "fan_status": "OK"
+  },
+  "security": {
+    "firewall_rules": [
+      {
+        "name": "permit-ssh",
+        "action": "permit",
+        "source": "192.168.1.0/24",
+        "destination": "any",
+        "service": "ssh",
+        "interface": "ge-0/0/0"
+      },
+      {
+        "name": "permit-web",
+        "action": "permit", 
+        "source": "10.0.1.0/24",
+        "destination": "any",
+        "service": "http",
+        "interface": "ge-0/0/1"
+      }
+    ],
+    "vpn_sessions": [
+      {
+        "peer": "192.168.200.1",
+        "tunnel": "ipsec-vpn-1",
+        "status": "UP",
+        "encryption": "AES-256",
+        "auth": "SHA-256",
+        "bytes_tx": "1048576",
+        "bytes_rx": "2097152"
+      }
+    ],
+    "logs": [
+      {
+        "timestamp": "2025-01-13T10:29:45Z",
+        "severity": "INFO",
+        "facility": "kernel",
+        "message": "Interface ge-0/0/0 link UP"
+      },
+      {
+        "timestamp": "2025-01-13T10:28:30Z",
+        "severity": "INFO", 
+        "facility": "rpd",
+        "message": "BGP peer 192.168.100.1 state changed to Established"
+      },
+      {
+        "timestamp": "2025-01-13T10:27:15Z",
+        "severity": "WARNING",
+        "facility": "chassisd",
+        "message": "Temperature sensor reading high"
+      }
+    ]
+  },
+  "raw_commands": [
+    {
+      "command": "show version",
+      "output": "Hostname: mx480-core-router\nModel: mx480\nJunos: 20.2R3.8\nJUNOS OS Kernel 64-bit  [20200909.075910_builder_stable_12]\nJUNOS OS libs [20200909.075910_builder_stable_12]\nUptime: 120 days, 14 hours, 25 minutes, 30 seconds",
+      "timestamp": "2025-01-13T10:30:01Z",
+      "duration": "1.2s",
+      "exit_code": 0
+    },
+    {
+      "command": "show chassis hardware",
+      "output": "Hardware inventory:\nItem             Version  Part number  Serial number     Description\nChassis                                ABC123456         MX480 Base Chassis\nMidplane         REV 06   750-025780   DEF234567         MX480 Backplane\nFPC 0            REV 08   750-028467   GHI345678         MPC Type 2 3D\nCPU              REV 07   750-026468   JKL456789         RMPC PMB",
+      "timestamp": "2025-01-13T10:30:02Z", 
+      "duration": "2.1s",
+      "exit_code": 0
+    },
+    {
+      "command": "show interfaces terse",
+      "output": "Interface               Admin Link Proto    Local                 Remote\nge-0/0/0                up    up   inet     192.168.100.10/24\nge-0/0/1                up    up   inet     10.0.1.1/24\nge-0/0/2                down  down\nlo0                     up    up   inet     127.0.0.1/32\n                                   inet6    ::1/128",
+      "timestamp": "2025-01-13T10:30:03Z",
+      "duration": "1.8s", 
+      "exit_code": 0
+    },
+    {
+      "command": "show route summary",
+      "output": "Autonomous system number: 65001\nRouter ID: 192.168.100.10\n\ninet.0: 50 destinations, 75 routes (50 active, 0 holddown, 0 hidden)\n              Direct:      5 routes,      5 active\n               Local:      5 routes,      5 active\n               Static:     10 routes,     10 active\n               BGP:        30 routes,     30 active",
+      "timestamp": "2025-01-13T10:30:04Z",
+      "duration": "1.5s",
+      "exit_code": 0
+    },
+    {
+      "command": "show security policies",
+      "output": "Default policy: deny-all\n\nFrom zone trust to zone untrust:\n  Policy: trust-to-untrust, State: enabled, Index: 5\n    Sequence number: 1\n    From addresses: any\n    To addresses: any\n    Application: junos-http\n    Action: permit\n\nFrom zone lan to zone wan:\n  Policy: lan-to-wan, State: enabled, Index: 6\n    Sequence number: 1\n    From addresses: 10.0.1.0/24\n    To addresses: any\n    Application: any\n    Action: permit",
+      "timestamp": "2025-01-13T10:30:05Z",
+      "duration": "2.3s",
+      "exit_code": 0
+    }
+  ],
+  "metadata": {
+    "collector_version": "1.0.0",
+    "collection_time": "2025-01-13T10:30:00Z",
+    "command_set": "standard",
+    "total_commands": 25,
+    "successful_commands": 25,
+    "failed_commands": 0,
+    "collection_duration": "45.2s",
+    "errors": [],
+    "warnings": []
+  },
+  "forensic_data": {
+    "show version": {
+      "os_version": "Junos: 20.2R3.8",
+      "hostname": "mx480-core-router",
+      "model": "mx480",
+      "uptime": "120 days, 14 hours, 25 minutes, 30 seconds",
+      "raw": "Hostname: mx480-core-router\nModel: mx480\nJunos: 20.2R3.8\nJUNOS OS Kernel 64-bit  [20200909.075910_builder_stable_12]\nJUNOS OS libs [20200909.075910_builder_stable_12]\nUptime: 120 days, 14 hours, 25 minutes, 30 seconds"
+    },
+    "show chassis hardware": {
+      "hardware_items": [
+        {
+          "item": "Chassis",
+          "version": "",
+          "part_number": "",
+          "serial": "ABC123456",
+          "description": "MX480 Base Chassis"
+        },
+        {
+          "item": "Midplane",
+          "version": "REV 06",
+          "part_number": "750-025780", 
+          "serial": "DEF234567",
+          "description": "MX480 Backplane"
+        },
+        {
+          "item": "FPC 0",
+          "version": "REV 08",
+          "part_number": "750-028467",
+          "serial": "GHI345678", 
+          "description": "MPC Type 2 3D"
+        }
+      ]
+    },
+    "show system processes": {
+      "processes": [
+        {
+          "pid": "1",
+          "username": "root",
+          "priority": "20",
+          "nice": "0",
+          "size": "3328K",
+          "res": "1508K",
+          "command": "/sbin/init"
+        },
+        {
+          "pid": "1234",
+          "username": "root",
+          "priority": "20", 
+          "nice": "0",
+          "size": "45M",
+          "res": "32M",
+          "command": "/usr/sbin/rpd -N"
+        }
+      ]
+    },
+    "show interfaces terse": {
+      "interfaces": [
+        {
+          "interface": "ge-0/0/0",
+          "admin_state": "up",
+          "link_state": "up",
+          "description": "inet 192.168.100.10/24"
+        },
+        {
+          "interface": "ge-0/0/1", 
+          "admin_state": "up",
+          "link_state": "up",
+          "description": "inet 10.0.1.1/24"
+        },
+        {
+          "interface": "lo0",
+          "admin_state": "up",
+          "link_state": "up",
+          "description": "inet 127.0.0.1/32"
+        }
+      ]
+    },
+    "show security policies": {
+      "security_policies": "Default policy: deny-all\n\nFrom zone trust to zone untrust:\n  Policy: trust-to-untrust, State: enabled, Index: 5\n    Sequence number: 1\n    From addresses: any\n    To addresses: any\n    Application: junos-http\n    Action: permit\n\nFrom zone lan to zone wan:\n  Policy: lan-to-wan, State: enabled, Index: 6\n    Sequence number: 1\n    From addresses: 10.0.1.0/24\n    To addresses: any\n    Application: any\n    Action: permit"
+    }
+  }
+}

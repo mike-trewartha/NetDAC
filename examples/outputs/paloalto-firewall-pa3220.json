@@ -1,0 +1,253 @@
+{
+  "device_info": {
+    "hostname": "PA-FW-EDGE-01",
+    "ip_address": "10.1.1.10",
+    "vendor": "paloalto",
+    "model": "PA-3220",
+    "version": "10.1.4",
+    "serial_number": "013201012345",
+    "uptime": "89 days, 6 hours, 15 minutes"
+  },
+  "timestamp": "2025-07-13T15:45:30.123Z",
+  "interfaces": [
+    {
+      "name": "ethernet1/1",
+      "status": "up",
+      "admin_status": "up",
+      "ip_address": "203.0.113.10",
+      "subnet_mask": "255.255.255.248",
+      "mac_address": "00:1b:17:12:34:01",
+      "mtu": "1500",
+      "speed": "1000",
+      "duplex": "full",
+      "description": "Untrust Zone - Internet"
+    },
+    {
+      "name": "ethernet1/2", 
+      "status": "up",
+      "admin_status": "up",
+      "ip_address": "10.1.1.10",
+      "subnet_mask": "255.255.255.0",
+      "mac_address": "00:1b:17:12:34:02",
+      "mtu": "1500",
+      "speed": "1000",
+      "duplex": "full",
+      "description": "Trust Zone - Internal LAN"
+    },
+    {
+      "name": "ethernet1/3",
+      "status": "up",
+      "admin_status": "up", 
+      "ip_address": "10.2.1.10",
+      "subnet_mask": "255.255.255.0",
+      "mac_address": "00:1b:17:12:34:03",
+      "mtu": "1500",
+      "speed": "1000",
+      "duplex": "full",
+      "description": "DMZ Zone - Web Services"
+    },
+    {
+      "name": "ethernet1/4",
+      "status": "down",
+      "admin_status": "down",
+      "ip_address": "",
+      "subnet_mask": "",
+      "mac_address": "00:1b:17:12:34:04",
+      "mtu": "1500",
+      "speed": "auto",
+      "duplex": "auto",
+      "description": "Unused - Future Expansion"
+    }
+  ],
+  "routes": [
+    {
+      "destination": "0.0.0.0/0",
+      "gateway": "203.0.113.9",
+      "interface": "ethernet1/1",
+      "metric": "10",
+      "protocol": "static",
+      "admin_distance": "10"
+    },
+    {
+      "destination": "10.1.1.0/24",
+      "gateway": "",
+      "interface": "ethernet1/2", 
+      "metric": "0",
+      "protocol": "connected",
+      "admin_distance": "0"
+    },
+    {
+      "destination": "10.2.1.0/24",
+      "gateway": "",
+      "interface": "ethernet1/3",
+      "metric": "0", 
+      "protocol": "connected",
+      "admin_distance": "0"
+    },
+    {
+      "destination": "203.0.113.8/29",
+      "gateway": "",
+      "interface": "ethernet1/1",
+      "metric": "0",
+      "protocol": "connected", 
+      "admin_distance": "0"
+    }
+  ],
+  "processes": [
+    {
+      "pid": "1",
+      "name": "init",
+      "cpu": "0.00%",
+      "memory": "2048",
+      "runtime": "89d6h",
+      "state": "running",
+      "priority": "0",
+      "command_line": "init"
+    },
+    {
+      "pid": "234",
+      "name": "pan_mgmt",
+      "cpu": "0.25%",
+      "memory": "16384",
+      "runtime": "89d6h",
+      "state": "running",
+      "priority": "0", 
+      "command_line": "pan_mgmt"
+    },
+    {
+      "pid": "456",
+      "name": "pan_comm",
+      "cpu": "0.15%",
+      "memory": "8192",
+      "runtime": "89d6h",
+      "state": "running",
+      "priority": "0",
+      "command_line": "pan_comm"
+    },
+    {
+      "pid": "789",
+      "name": "sshd",
+      "cpu": "0.02%",
+      "memory": "4096",
+      "runtime": "1h23m",
+      "state": "running",
+      "priority": "0",
+      "command_line": "sshd"
+    }
+  ],
+  "sessions": [
+    {
+      "user": "admin",
+      "line": "ssh",
+      "location": "10.1.1.100",
+      "idle_time": "00:05:12",
+      "login_time": "14:22:18",
+      "protocol": "ssh"
+    },
+    {
+      "user": "readonly",
+      "line": "https", 
+      "location": "10.1.1.50",
+      "idle_time": "00:02:30",
+      "login_time": "15:40:22",
+      "protocol": "https"
+    }
+  ],
+  "connections": [
+    {
+      "protocol": "TCP",
+      "local_address": "10.1.1.10",
+      "local_port": "22",
+      "remote_address": "10.1.1.100", 
+      "remote_port": "54987",
+      "state": "ESTABLISHED",
+      "pid": "789",
+      "process": "sshd"
+    },
+    {
+      "protocol": "TCP",
+      "local_address": "10.1.1.10",
+      "local_port": "443",
+      "remote_address": "10.1.1.50",
+      "remote_port": "49876",
+      "state": "ESTABLISHED",
+      "pid": "234",
+      "process": "pan_mgmt"
+    }
+  ],
+  "security_info": {
+    "acl_rules": [
+      {
+        "name": "Allow_Web_DMZ",
+        "type": "security_policy",
+        "sequence": 1,
+        "action": "allow",
+        "protocol": "tcp",
+        "source": "any",
+        "destination": "10.2.1.0/24",
+        "port": "80,443",
+        "direction": "inbound",
+        "interface": "ethernet1/1"
+      },
+      {
+        "name": "Allow_Internal_Outbound",
+        "type": "security_policy",
+        "sequence": 2,
+        "action": "allow",
+        "protocol": "any",
+        "source": "10.1.1.0/24",
+        "destination": "any",
+        "port": "any",
+        "direction": "outbound",
+        "interface": "ethernet1/2"
+      },
+      {
+        "name": "Block_Internal_to_DMZ",
+        "type": "security_policy",
+        "sequence": 3,
+        "action": "deny",
+        "protocol": "any",
+        "source": "10.1.1.0/24",
+        "destination": "10.2.1.0/24",
+        "port": "any",
+        "direction": "any",
+        "interface": "any"
+      },
+      {
+        "name": "Default_Deny",
+        "type": "security_policy",
+        "sequence": 999,
+        "action": "deny",
+        "protocol": "any",
+        "source": "any",
+        "destination": "any",
+        "port": "any",
+        "direction": "any",
+        "interface": "any"
+      }
+    ]
+  },
+  "metadata": {
+    "total_commands": 28,
+    "successful_commands": 28,
+    "failed_commands": 0,
+    "collection_duration": "89.3s",
+    "errors": []
+  },
+  "raw_commands": [
+    {
+      "command": "show system info",
+      "output": "hostname: PA-FW-EDGE-01\nip-address: 10.1.1.10\nnetmask: 255.255.255.0\ndefault-gateway: 10.1.1.1\nis-dhcp: no\nmac-address: 00:1b:17:12:34:02\ntime: Sun Jul 13 15:45:30 2025\nuptime: 89 days, 6:15:23\nfamily: 3000\nmodel: PA-3220\nserial: 013201012345\nsw-version: 10.1.4\nglobal-protect-client-package-version: 0.0.0\napp-version: 8542-7042\napp-release-date: 2025/07/10 15:01:23 UTC\nav-version: 4242-4841\nav-release-date: 2025/07/11 00:01:15 UTC\nthreat-version: 8542-7042\nthreat-release-date: 2025/07/10 15:01:23 UTC\nwf-private-version: 0\nwf-private-release-date: unknown\nurl-db: paloaltonetworks\nwildfire-version: 0\nwildfire-release-date: \nwildfire-rt: Disabled\nlogdb-version: 10.1.2",
+      "timestamp": "2025-07-13T15:45:31.234Z",
+      "exit_code": 0,
+      "duration": "2.1s"
+    },
+    {
+      "command": "show interface all",
+      "output": "ethernet1/1            \n  State: up               Admin State: up\n  Link state: up          Speed: 1000Mbps\n  Duplex: full            Type: copper\n  MAC: 00:1b:17:12:34:01\n  IP: 203.0.113.10/29\n  Zone: untrust\n\nethernet1/2            \n  State: up               Admin State: up\n  Link state: up          Speed: 1000Mbps\n  Duplex: full            Type: copper\n  MAC: 00:1b:17:12:34:02\n  IP: 10.1.1.10/24\n  Zone: trust\n\nethernet1/3            \n  State: up               Admin State: up\n  Link state: up          Speed: 1000Mbps\n  Duplex: full            Type: copper\n  MAC: 00:1b:17:12:34:03\n  IP: 10.2.1.10/24\n  Zone: dmz",
+      "timestamp": "2025-07-13T15:45:33.567Z",
+      "exit_code": 0,
+      "duration": "1.8s"
+    }
+  ]
+}

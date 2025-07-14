@@ -1,0 +1,215 @@
+device_info:
+  hostname: ASA-EDGE-01
+  ip_address: 172.31.1.1
+  vendor: cisco
+  model: ASA5516-X
+  version: 9.12(4)18
+  serial_number: JMX2245K123
+  uptime: 125 days, 18 hours, 42 minutes
+timestamp: '2025-07-13T15:45:30.123Z'
+interfaces:
+  - name: GigabitEthernet0/0
+    status: up
+    admin_status: up
+    ip_address: 203.0.113.25
+    subnet_mask: 255.255.255.248
+    mac_address: 84:b8:02:12:34:01
+    mtu: "1500"
+    speed: "1000"
+    duplex: full
+    description: "OUTSIDE - Internet Facing"
+  - name: GigabitEthernet0/1
+    status: up
+    admin_status: up
+    ip_address: 172.31.1.1
+    subnet_mask: 255.255.255.0
+    mac_address: 84:b8:02:12:34:02
+    mtu: "1500"
+    speed: "1000"
+    duplex: full
+    description: "INSIDE - Internal Network"
+  - name: GigabitEthernet0/2
+    status: up
+    admin_status: up
+    ip_address: 172.31.50.1
+    subnet_mask: 255.255.255.0
+    mac_address: 84:b8:02:12:34:03
+    mtu: "1500"
+    speed: "1000"
+    duplex: full
+    description: "DMZ - Server Farm"
+  - name: Management0/0
+    status: up
+    admin_status: up
+    ip_address: 192.168.99.10
+    subnet_mask: 255.255.255.0
+    mac_address: 84:b8:02:12:34:ff
+    mtu: "1500"
+    speed: "100"
+    duplex: full
+    description: "Management Interface"
+routes:
+  - destination: 0.0.0.0/0
+    gateway: 203.0.113.30
+    interface: GigabitEthernet0/0
+    metric: "1"
+    protocol: static
+    admin_distance: "1"
+  - destination: 172.31.1.0/24
+    gateway: ""
+    interface: GigabitEthernet0/1
+    metric: "0"
+    protocol: connected
+    admin_distance: "0"
+  - destination: 172.31.50.0/24
+    gateway: ""
+    interface: GigabitEthernet0/2
+    metric: "0"
+    protocol: connected
+    admin_distance: "0"
+  - destination: 192.168.99.0/24
+    gateway: ""
+    interface: Management0/0
+    metric: "0"
+    protocol: connected
+    admin_distance: "0"
+processes:
+  - pid: "1"
+    name: Init
+    cpu: 0.00%
+    memory: "1024"
+    runtime: 125d18h
+    state: running
+    priority: "0"
+    command_line: Init
+  - pid: "89"
+    name: Crypto CA
+    cpu: 0.01%
+    memory: "4096"
+    runtime: 125d18h
+    state: running
+    priority: "0"
+    command_line: Crypto CA
+  - pid: "156"
+    name: VPN Server
+    cpu: 0.08%
+    memory: "8192"
+    runtime: 125d18h
+    state: running
+    priority: "0"
+    command_line: VPN Server
+  - pid: "234"
+    name: SSH
+    cpu: 0.02%
+    memory: "2048"
+    runtime: 2h15m
+    state: running
+    priority: "0"
+    command_line: SSH
+sessions:
+  - user: enable_15
+    line: ssh
+    location: 192.168.99.100
+    idle_time: "00:04:33"
+    login_time: "13:30:27"
+    protocol: ssh
+  - user: enable_15
+    line: https
+    location: 172.31.1.100
+    idle_time: "00:01:22"
+    login_time: "15:44:08"
+    protocol: https
+connections:
+  - protocol: TCP
+    local_address: 192.168.99.10
+    local_port: "22"
+    remote_address: 192.168.99.100
+    remote_port: "54234"
+    state: ESTABLISHED
+    pid: "234"
+    process: SSH
+  - protocol: TCP
+    local_address: 172.31.1.1
+    local_port: "443"
+    remote_address: 172.31.1.100
+    remote_port: "51234"
+    state: ESTABLISHED
+    pid: "145"
+    process: ASDM
+  - protocol: UDP
+    local_address: 203.0.113.25
+    local_port: "500"
+    remote_address: 198.51.100.25
+    remote_port: "500"
+    state: ESTABLISHED
+    pid: "156"
+    process: VPN Server
+security_info:
+  acl_rules:
+    - name: OUTSIDE_IN
+      type: extended
+      sequence: 10
+      action: permit
+      protocol: tcp
+      source: any
+      destination: object WEB_SERVERS
+      port: eq 80
+      direction: inbound
+      interface: GigabitEthernet0/0
+    - name: OUTSIDE_IN
+      type: extended
+      sequence: 20
+      action: permit
+      protocol: tcp
+      source: any
+      destination: object WEB_SERVERS
+      port: eq 443
+      direction: inbound
+      interface: GigabitEthernet0/0
+    - name: OUTSIDE_IN
+      type: extended
+      sequence: 30
+      action: permit
+      protocol: udp
+      source: any
+      destination: 203.0.113.25
+      port: eq 500
+      direction: inbound
+      interface: GigabitEthernet0/0
+    - name: INSIDE_OUT
+      type: extended
+      sequence: 10
+      action: permit
+      protocol: ip
+      source: 172.31.1.0 255.255.255.0
+      destination: any
+      port: ""
+      direction: outbound
+      interface: GigabitEthernet0/1
+    - name: DMZ_OUT
+      type: extended
+      sequence: 10
+      action: permit
+      protocol: tcp
+      source: 172.31.50.0 255.255.255.0
+      destination: any
+      port: eq 80
+      direction: outbound
+      interface: GigabitEthernet0/2
+    - name: DMZ_OUT
+      type: extended
+      sequence: 20
+      action: permit
+      protocol: tcp
+      source: 172.31.50.0 255.255.255.0
+      destination: any
+      port: eq 443
+      direction: outbound
+      interface: GigabitEthernet0/2
+metadata:
+  total_commands: 25
+  successful_commands: 24
+  failed_commands: 1
+  collection_duration: 78.9s
+  errors:
+    - "Command 'show vpn-sessiondb summary' failed: % Invalid input detected at '^' marker."

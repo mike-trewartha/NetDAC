@@ -1,0 +1,166 @@
+device_info:
+  hostname: CORE-SW-01
+  ip_address: 10.0.0.10
+  vendor: cisco
+  model: Catalyst 9300-48P
+  version: 16.12.05
+  serial_number: FCW2140L0GH
+  uptime: 12 days, 8 hours, 45 minutes
+timestamp: '2025-07-13T15:45:30.123Z'
+interfaces:
+  - name: GigabitEthernet1/0/1
+    status: up
+    admin_status: up
+    ip_address: ""
+    subnet_mask: ""
+    mac_address: 70:69:79:12:34:01
+    mtu: "1500"
+    speed: "1000"
+    duplex: full
+    description: "Server VLAN 100 - Production Servers"
+  - name: GigabitEthernet1/0/2
+    status: up
+    admin_status: up
+    ip_address: ""
+    subnet_mask: ""
+    mac_address: 70:69:79:12:34:02
+    mtu: "1500"
+    speed: "1000"
+    duplex: full
+    description: "User VLAN 200 - Employee Workstations"
+  - name: GigabitEthernet1/0/24
+    status: up
+    admin_status: up
+    ip_address: ""
+    subnet_mask: ""
+    mac_address: 70:69:79:12:34:18
+    mtu: "1500"
+    speed: "1000"
+    duplex: full
+    description: "Trunk to Distribution Switch"
+  - name: Vlan100
+    status: up
+    admin_status: up
+    ip_address: 10.0.100.1
+    subnet_mask: 255.255.255.0
+    mac_address: 70:69:79:12:34:ff
+    mtu: "1500"
+    speed: "1000"
+    duplex: ""
+    description: "Server VLAN SVI"
+  - name: Vlan200
+    status: up
+    admin_status: up
+    ip_address: 10.0.200.1
+    subnet_mask: 255.255.255.0
+    mac_address: 70:69:79:12:34:fe
+    mtu: "1500"
+    speed: "1000"
+    duplex: ""
+    description: "User VLAN SVI"
+routes:
+  - destination: 0.0.0.0/0
+    gateway: 10.0.0.1
+    interface: Vlan1
+    metric: "1"
+    protocol: static
+    admin_distance: "1"
+  - destination: 10.0.100.0/24
+    gateway: ""
+    interface: Vlan100
+    metric: "0"
+    protocol: connected
+    admin_distance: "0"
+  - destination: 10.0.200.0/24
+    gateway: ""
+    interface: Vlan200
+    metric: "0"
+    protocol: connected
+    admin_distance: "0"
+processes:
+  - pid: "1"
+    name: Kernel
+    cpu: 0.00%
+    memory: "8192"
+    runtime: 12d8h
+    state: running
+    priority: "0"
+    command_line: Kernel
+  - pid: "25"
+    name: STP Process
+    cpu: 0.02%
+    memory: "4096"
+    runtime: 12d8h
+    state: running
+    priority: "0"
+    command_line: STP Process
+  - pid: "68"
+    name: SNMP Engine
+    cpu: 0.01%
+    memory: "2048"
+    runtime: 12d8h
+    state: running
+    priority: "0"
+    command_line: SNMP Engine
+sessions:
+  - user: admin
+    line: vty 0
+    location: 10.0.0.100
+    idle_time: "00:01:45"
+    login_time: "14:20:10"
+    protocol: ssh
+connections:
+  - protocol: TCP
+    local_address: 10.0.0.10
+    local_port: "22"
+    remote_address: 10.0.0.100
+    remote_port: "52341"
+    state: ESTABLISHED
+    pid: "156"
+    process: SSH Process
+  - protocol: UDP
+    local_address: 10.0.0.10
+    local_port: "161"
+    remote_address: 10.0.0.50
+    remote_port: "54123"
+    state: LISTEN
+    pid: "68"
+    process: SNMP Engine
+security_info:
+  acl_rules:
+    - name: SERVER_ACCESS
+      type: extended
+      sequence: 10
+      action: permit
+      protocol: tcp
+      source: 10.0.200.0 0.0.0.255
+      destination: 10.0.100.0 0.0.0.255
+      port: eq 80
+      direction: inbound
+      interface: Vlan200
+    - name: SERVER_ACCESS
+      type: extended
+      sequence: 20
+      action: permit
+      protocol: tcp
+      source: 10.0.200.0 0.0.0.255
+      destination: 10.0.100.0 0.0.0.255
+      port: eq 443
+      direction: inbound
+      interface: Vlan200
+    - name: SERVER_ACCESS
+      type: extended
+      sequence: 30
+      action: deny
+      protocol: ip
+      source: any
+      destination: 10.0.100.0 0.0.0.255
+      port: ""
+      direction: inbound
+      interface: Vlan200
+metadata:
+  total_commands: 18
+  successful_commands: 18
+  failed_commands: 0
+  collection_duration: 52.8s
+  errors: []

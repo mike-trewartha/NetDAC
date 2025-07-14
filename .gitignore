@@ -4,7 +4,6 @@
 *.dll
 *.so
 *.dylib
-netdac
 netdac.exe
 
 # Test binary, built with `go test -c`

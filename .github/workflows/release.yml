@@ -19,11 +19,13 @@ jobs:
 
       - name: Build for Windows
         run: |
-          GOOS=windows GOARCH=amd64 go build -o netdac.exe cmd/netdac/
+          GOOS=windows GOARCH=amd64 go build -o ../../netdac.exe .
+        working-directory: ./cmd/netdac/
 
       - name: Build for Linux
         run: |
-          GOOS=linux GOARCH=amd64 go build -o netdac cmd/netdac/
+          GOOS=linux GOARCH=amd64 go build -o ../../netdac .
+        working-directory: ./cmd/netdac/
 
       - name: Create release
         id: create_release

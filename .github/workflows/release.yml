@@ -1,4 +1,5 @@
-name: Release
+name: Build and Release
+
 on:
   push:
     tags:
@@ -9,21 +10,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Setup Go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v2
         with:
-          go-version: '1.24.5' 
+          go-version: '1.24.5'
 
       - name: Build for Windows
         run: |
-          GOOS=windows GOARCH=amd64 go build -o netdac.exe
-      
+          GOOS=windows GOARCH=amd64 go build -o netdac.exe cmd/netdac/
+
       - name: Build for Linux
         run: |
-          GOOS=linux GOARCH=amd64 go build -o netdac
-      
+          GOOS=linux GOARCH=amd64 go build -o netdac cmd/netdac/
+
       - name: Create release
         id: create_release
         uses: softprops/action-gh-release@v1
